@@ -62,7 +62,7 @@ addFriendButton.addEventListener('click', () => {
 
 function displayFriends() {
     // clear out the friends in DOM
-    friendsEl.value = '';   //textContent?
+    friendsEl.textContent = '';   
 
     // for each friend in state . . .
     for (let friend of friendData) {
@@ -84,7 +84,7 @@ function displayFriends() {
             displayFriends();
             displayMushrooms();
         });    
-        
+
         // append the friendEl to the friends list in DOM
         friendsEl.append(friendEl);
     }
@@ -93,9 +93,12 @@ function displayFriends() {
 
 function displayMushrooms() {
     // clear out the mushroom div
+    mushroomsEl.textContent = '';
 
     for (let i = 0; i < mushroomCount; i++) {
         // for each mushroom in your mushroom state, render and append a mushroom
+        const mushroomDisplayEl = renderMushroom();
+        mushroomsEl.append(mushroomDisplayEl);
     }
 }
 
