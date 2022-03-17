@@ -16,6 +16,11 @@ export function renderFriend(friend) {
 
     nameEl.textContent = friend.name;
 
+    const friendEl = {
+        name: nameEl || `Friend #${Math.floor(Math.random() * 1000)}`,
+        satisfaction: Math.floor(Math.random()) * 2,
+    };
+
     if (friend.satisfaction === 1) {
         emojiEl.textContent = '😒';
     }
@@ -28,6 +33,6 @@ export function renderFriend(friend) {
         emojiEl.textContent = '😀';
     }
 
-    div.append(nameEl, emojiEl);
+    div.append(friendEl.name, friendEl.satisfaction);
     return div;
 }
