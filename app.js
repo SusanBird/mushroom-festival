@@ -40,6 +40,7 @@ addMushroomButton.addEventListener('click', () => {
     }
 });
 
+// sad, slow death of the form 
 // formEl.addEventListener('submit', (e) => {
 //     e.preventDefault();
 
@@ -113,7 +114,7 @@ function displayMushrooms() {
 
     for (let i = 0; i < mushroomCount; i++) {
         const mushroomDisplayEl = renderMushroom();
-        mushroomsEl.append(mushroomDisplayEl);          //update variable here?
+        mushroomsEl.append(mushroomDisplayEl);         
     }
 }
 
