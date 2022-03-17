@@ -6,6 +6,7 @@ export function renderMushroom() {
 }
 
 export function renderFriend(friend) {
+    //console.log(friend); - get an array instead of an object, accidentally passing friends not friend 
     const div = document.createElement('div');
     const nameEl = document.createElement('p');
     const emojiEl = document.createElement('p');
@@ -15,11 +16,6 @@ export function renderFriend(friend) {
     emojiEl.classList.add('emoji');
 
     nameEl.textContent = friend.name;
-
-    const friendEl = {
-        name: nameEl || `Friend #${Math.floor(Math.random() * 1000)}`,
-        satisfaction: Math.floor(Math.random()) * 2,
-    };
 
     if (friend.satisfaction === 1) {
         emojiEl.textContent = '😒';
@@ -33,6 +29,6 @@ export function renderFriend(friend) {
         emojiEl.textContent = '😀';
     }
 
-    div.append(friendEl.name, friendEl.satisfaction);
+    div.append(nameEl, emojiEl);
     return div;
 }

@@ -5,8 +5,7 @@ const friendsEl = document.querySelector('.friends');
 //const friendInputEl = document.getElementById('friend-input');
 const mushroomsEl = document.querySelector('.mushrooms');
 const addMushroomButton = document.getElementById('add-mushroom-button');
-//const addFriendButton = document.getElementById('add-friend-button');
-const formEl = document.querySelector('form');
+const addFriendButton = document.getElementById('add-friend-button');
 
 // initialize state
 let mushroomCount = 3;
@@ -41,26 +40,37 @@ addMushroomButton.addEventListener('click', () => {
     }
 });
 
-formEl.addEventListener('submit', (e) => {
-    e.preventDefault();
+// formEl.addEventListener('submit', (e) => {
+//     e.preventDefault();
 
-    // get the name from the input
-    const data = new FormData(formEl);
+//     // get the name from the input
+//     const data = new FormData(formEl);
     
-    // create a new friend object
-    const newFriendObject = {
-        name: data.get('friend-name'),
-        satisfaction: Math.floor(Math.random()) * 2,
-    };
+//     // create a new friend object
+//     const newFriendObject = {
+//         name: data.get('friend-name'),
+//         satisfaction: Math.floor(Math.random()) * 2,
+//     };
 
-    // push it into the friends state array, passed in as an argument
-    friendData.push(newFriendObject);
+//     // push it into the friends state array, passed in as an argument
+//     friendData.push(newFriendObject);
 
-    // reset the input
-    formEl.reset();
+//     // reset the input
+//     formEl.reset();
 
-    // display all the friends (use a function here)
-    displayFriends();
+//     // display all the friends (use a function here)
+//     displayFriends();
+// });
+
+addFriendButton.addEventListener('click', () => {
+    const friendInputEl = document.querySelector('input');
+    const name = friendInputEl.value;
+
+    addFriend(name, friendData);
+
+    friendInputEl.value = '';
+
+    displayFriends(friendData);
 });
 
 function displayFriends() {
@@ -88,7 +98,7 @@ function displayFriends() {
                 friendInState.satisfaction++;
                 mushroomCount--; 
             }
-            displayFriends();
+            displayFriends(friendData);
             displayMushrooms();
         });    
 
@@ -97,23 +107,31 @@ function displayFriends() {
     }
 }
 
+function displayMushrooms() {
+    // clear out the mushroom div
+    mushroomsEl.textContent = '';
+
+    for (let i = 0; i < mushroomCount; i++) {
+        const mushroomDisplayEl = renderMushroom();
+        mushroomsEl.append(mushroomDisplayEl);          //update variable here?
+    }
+}
+
+function addFriend(name, friends) {
+    const newFriend = {
+        name: name || `Friend #${Math.floor(Math.random() * 1000)}`,
+        satisfaction: 1
+    };
+    friends.push(newFriend);
+}
+
+
 function findFriendByName(name, friends) {
 
     for (let friend of friends) {
         if (friend.name === name) {
             return friend;
         }
-    }
-}
-
-function displayMushrooms() {
-    // clear out the mushroom div
-    mushroomsEl.textContent = '';
-
-    for (let i = 0; i < mushroomCount; i++) {
-        // for each mushroom in your mushroom state, render and append a mushroom
-        const mushroomDisplayEl = renderMushroom();
-        mushroomsEl.append(mushroomDisplayEl);
     }
 }
 
