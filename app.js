@@ -2,10 +2,11 @@
 import { renderMushroom, renderFriend } from './render-utils.js';
 
 const friendsEl = document.querySelector('.friends');
-const friendInputEl = document.getElementById('friend-input');
+//const friendInputEl = document.getElementById('friend-input');
 const mushroomsEl = document.querySelector('.mushrooms');
 const addMushroomButton = document.getElementById('add-mushroom-button');
-const addFriendButton = document.getElementById('add-friend-button');
+//const addFriendButton = document.getElementById('add-friend-button');
+const formEl = document.querySelector('form');
 
 // initialize state
 let mushroomCount = 3;
@@ -40,13 +41,15 @@ addMushroomButton.addEventListener('click', () => {
     }
 });
 
-addFriendButton.addEventListener('click', () => {
+formEl.addEventListener('submit', (e) => {
+    e.preventDefault();
+
     // get the name from the input
-    const data = new FormData(friendInputEl);
+    const data = new FormData(formEl);
     
     // create a new friend object
     const newFriendObject = {
-        name: data.get['friend-input'],
+        name: data.get('friend-name'),
         satisfaction: Math.floor(Math.random()) * 2,
     };
 
@@ -54,7 +57,7 @@ addFriendButton.addEventListener('click', () => {
     friendData.push(newFriendObject);
 
     // reset the input
-    friendInputEl.value = '';
+    formEl.reset();
 
     // display all the friends (use a function here)
     displayFriends();
@@ -76,9 +79,13 @@ function displayFriends() {
         //             increment the friends satisfaction and decrement your mushrooms
         //             then display your friends and mushrooms with the updated state
         friendEl.addEventListener('click', () => {
-
-            if (friend.satisfaction < 3 && mushroomCount > 0){
-                friend.satisfaction++;
+            const friendInState = findFriendByName(friend.name, friendData);
+            
+            if (mushroomCount === 0) {
+                alert('no mushrooms left! go forage for some more');
+            }
+            if (friendInState.satisfaction < 3 && mushroomCount > 0){
+                friendInState.satisfaction++;
                 mushroomCount--; 
             }
             displayFriends();
@@ -90,6 +97,14 @@ function displayFriends() {
     }
 }
 
+function findFriendByName(name, friends) {
+
+    for (let friend of friends) {
+        if (friend.name === name) {
+            return friend;
+        }
+    }
+}
 
 function displayMushrooms() {
     // clear out the mushroom div
